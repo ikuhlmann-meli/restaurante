@@ -3,23 +3,25 @@ package com.example.restaurante.service;
 import com.example.restaurante.entity.Caixa;
 import com.example.restaurante.entity.Mesa;
 import com.example.restaurante.entity.Pedido;
-import com.example.restaurante.entity.Prato;
+
+import com.example.restaurante.repository.RestauranteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
+import com.example.restaurante.entity.Prato;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RestauranteService {
-    Prato prato = Prato.builder().id(1).descricao("prato").build();
-    List<Prato> list1 = List.of(prato);
-    Pedido p1 = Pedido.builder().id(1l).listaPrato(List.of(prato, prato)).build();
 
+    @Autowired
     private RestauranteRepository restauranteRepository;
 
-    public UsuarioService(RestauranteRepository restauranteRepository) {
+    public RestauranteService(RestauranteRepository restauranteRepository) {
+
         this.restauranteRepository = restauranteRepository;
     }
 
@@ -35,15 +37,20 @@ public class RestauranteService {
     }
 
     public BigDecimal fecharPedido(Long mesaNumero){
+
+
         Mesa mesa = consultaPedidos(mesaNumero);
-        mesa.getListaPedidos().clear();
+        mesa.setListaPedidos(new ArrayList<>());
         Caixa caixa = restauranteRepository.consultaCaixa();
         restauranteRepository.atualizaMesa(mesa);
-        BigDecimal atual = caixa.getValorTotal();
+        BigDecimal totalMesa = caixa.getValorTotal();
+        BigDecimal atual = totalMesa;
         BigDecimal novo = atual.add(mesa.getValorTotal());
         caixa.setValorTotal(novo);
         restauranteRepository.atualizaCaixa(caixa);
-        return atual;
+
+        return totalMesa;
+
     }
 
     public Caixa totalCaixa(){
