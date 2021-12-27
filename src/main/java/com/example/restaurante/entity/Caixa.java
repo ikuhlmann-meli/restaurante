@@ -6,16 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
-public class Pedido {
-    private Long id;
-    private Long mesa;
-    private List<Prato> listaPrato;
+public class Caixa {
     private BigDecimal valorTotal;
-
 }
