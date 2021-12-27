@@ -3,9 +3,12 @@ package com.example.restaurante.service;
 import com.example.restaurante.entity.Caixa;
 import com.example.restaurante.entity.Mesa;
 import com.example.restaurante.entity.Pedido;
+
 import com.example.restaurante.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.restaurante.entity.Prato;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ public class RestauranteService {
     private RestauranteRepository restauranteRepository;
 
     public RestauranteService(RestauranteRepository restauranteRepository) {
+
         this.restauranteRepository = restauranteRepository;
     }
 
@@ -34,6 +38,7 @@ public class RestauranteService {
 
     public BigDecimal fecharPedido(Long mesaNumero){
 
+
         Mesa mesa = consultaPedidos(mesaNumero);
         mesa.setListaPedidos(new ArrayList<>());
         Caixa caixa = restauranteRepository.consultaCaixa();
@@ -45,6 +50,7 @@ public class RestauranteService {
         restauranteRepository.atualizaCaixa(caixa);
 
         return totalMesa;
+
     }
 
     public Caixa totalCaixa(){
