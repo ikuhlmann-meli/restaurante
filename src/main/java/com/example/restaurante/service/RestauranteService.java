@@ -3,13 +3,19 @@ package com.example.restaurante.service;
 import com.example.restaurante.entity.Caixa;
 import com.example.restaurante.entity.Mesa;
 import com.example.restaurante.entity.Pedido;
+import com.example.restaurante.entity.Prato;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RestauranteService {
+    Prato prato = Prato.builder().id(1).descricao("prato").build();
+    List<Prato> list1 = List.of(prato);
+    Pedido p1 = Pedido.builder().id(1l).listaPrato(List.of(prato, prato)).build();
 
     private RestauranteRepository restauranteRepository;
 
